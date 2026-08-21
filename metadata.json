@@ -1,0 +1,19 @@
+{
+    "name": "Chaos Theory",
+    "id": "chaostheory",
+    "version": "0.1",
+    "description": "A crazy mod arranged by an even crazier guy and made by a couple of the craziest talents.",
+    "prefix": "chat",
+    "author": ["FirstTry"],
+    "main_file": "chaostheory.lua",
+    "priority": 0,
+	"text_colour": "F3F3F3",
+    "badge_colour": "3F3F3F",
+    "dependencies": [
+		"Steamodded(>=1.0.0~BETA-2004d)",
+		"Lovely (>=0.9)",
+		"PotatoPatchUtils (>=1.0.14)",
+		"Amulet",
+		"Spectrallib"
+    ]
+}

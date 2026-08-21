@@ -1,0 +1,63 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 0
+
+# Add debug give for fish, rods, and bait
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = 'if key == "3" then'
+position = "after"
+payload = '''
+if _card.ability.set == 'chat_imp' and G.chat_imp_area then
+    if G.chat_imp_area.cards[1] then G.chat_imp_area.cards[1]:remove() end
+    SMODS.add_card({area = G.chat_imp_area, key = _card.config.center.key})
+    _card:set_sprites(_card.config.center)
+end
+'''
+match_indent = true
+
+# Add calculation
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = "-- TARGET: add your own CardAreas for joker evaluation"
+position = "after"
+payload = '''
+if G.chat_imp_area then table.insert(t,1,G.chat_imp_area) end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "return create_UIBox_generic_options({contents ={create_tabs("
+position = "before"
+payload = '''
+  local tabs = {
+
+  }
+
+  local def = G.GAME.DefineKeys and {
+          label = localize('b_definitions'),
+          tab_definition_function = G.UIDEF.define_keys,
+        } or nil
+  local decks = G.GAME.entr_bought_decks and #G.GAME.entr_bought_decks > 0 and {
+          label = localize('b_decks'), 
+          tab_definition_function = G.UIDEF.bought_decks,
+        } or nil
+  local imps = G.GAME.saved_imps and #G.GAME.saved_imps > 0 and {
+          label = localize('b_imps'), 
+          tab_definition_function = G.UIDEF.saved_imps,
+        } or nil
+  local stake = G.GAME.stake > 1 and {
+          label = localize('b_stake'),
+          tab_definition_function = G.UIDEF.current_stake,
+        } or nil
+  if def then tabs[#tabs+1] = def end
+  if decks then tabs[#tabs+1] = decks end
+  if imps then tabs[#tabs+1] = imps end
+  if stake then tabs[#tabs+1] = stake end
+'''
+match_indent = true
