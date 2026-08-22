@@ -21,7 +21,7 @@ SMODS.Atlas{
 	}
 PotatoPatchUtils.load_files(ChaosTheory.mod.path .. '/src', bl)
 PotatoPatchUtils.load_files(ChaosTheory.mod.path .. '/content')
-PotatoPatchUtils.load_files(ChaosTheory.mod.path .. '/dummies')
+--PotatoPatchUtils.load_files(ChaosTheory.mod.path .. '/dummies')
 for k,v in pairs(PotatoPatchUtils.Developers) do
 	if not v.team and v.mod_id == "chaostheory" then
 		ChaosTheory.SoloDevs[k] = v
