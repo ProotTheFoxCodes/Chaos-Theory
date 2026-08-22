@@ -78,6 +78,40 @@ SMODS.Atlas{
     py = 95
 }
 
+SMODS.Atlas{
+    key = "placeHBoosters",
+    path = "core/placeholdBooster.png",
+    px = 71,
+    py = 96
+}
+
+
+local boosterType = "chaos"
+local boosters = {
+    {"mega",{2,1}},
+    {"jumbo",{0,1}},
+    {"standard",{0,0}},
+    {"mini",{0,2}}
+}
+
+for k,v in ipairs(boosters) do
+    SMODS.Booster{
+        key = boosterType.."_"..v[1],
+        atlas = "placeHBoosters",
+        pos = { x = v[2][1] , y = v[2][2] },
+        kind = boosterType,
+        create_card = function(self, card)
+            return {set = "chat_chaos", area = G.pack_cards, skip_materialize = true, soulable = true}
+        end,
+        config = {
+            extra = 6-k,
+            choose = math.min(5-k, 3)
+        },
+        in_pool = function (self, args)
+            return false
+        end
+    }
+end
 
 SMODS.Consumable {
     key = 'catalyst',

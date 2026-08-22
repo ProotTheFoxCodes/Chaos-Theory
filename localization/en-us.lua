@@ -26,6 +26,43 @@ return {
                     "learn what it does",
                 },
             },
+            p_chat_chaos_mini = { 
+				name = "Mini Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_standard = { 
+				name = "Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_jumbo = { 
+				name = "Jumbo Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_mega = { 
+				name = "Jumbo Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            
         },
         Planet={},
         Spectral={},
