@@ -113,6 +113,7 @@ for k,v in ipairs(boosters) do
     }
 end
 
+
 SMODS.Consumable {
     key = 'catalyst',
    set = 'chat_chaos',

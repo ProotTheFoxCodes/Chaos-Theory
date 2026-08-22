@@ -15,6 +15,8 @@ SMODS.current_mod.ui_config = {
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
     G.GAME.chaos = 0
+    G.GAME.max_chaos = 200
+    G.GAME.chaos_slots = 2
   end
 end
 
@@ -45,7 +47,7 @@ function create_UIBox_HUD()
           {n=G.UIT.T, config={text = localize('b_options'), scale = scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
         }},
         }},
-        {n=G.UIT.R, config={align = "cm", minh = 1, minw = 2,padding = 0.05, r = 0.1, hover = true, colour=G.C.DYN_UI.BOSS_MAIN,emboss=0.05}, nodes={
+        {n=G.UIT.R, config={align = "cm", minh = 1, minw = 2,padding = 0.05, r = 0.1, hover = true, colour=G.C.DYN_UI.BOSS_MAIN,emboss=0.05,detailed_tooltip = { set = "Other", key = "chat_chaos_desc", vars = { G.GAME.max_chaos, G.GAME.chaos_slots } },}, nodes={
         {n=G.UIT.R, config={align = "cm", maxw = 1.35}, nodes={
           {n=G.UIT.T, config={text = localize('k_chaos'), minh = 0.33, scale = 0.85*scale, colour = SMODS.Gradients["chat_chaos"], shadow = true}},
         }},
@@ -104,8 +106,11 @@ function ease_chaos(mod)
               col = G.C.BLACK
           end
           G.GAME.chaos = (G.GAME.chaos or 0) + mod
-          G.GAME.chat_chaos_rate = (G.GAME.chat_chaos_rate or 0) + mod/10
-          G.GAME.c_chat_catalyst_rate = (G.GAME.c_chat_catalyst_rate or 0) + mod/100
+          if G.GAME.chaos > G.GAME.max_chaos then
+            G.GAME.chaos = G.GAME.chaos - G.GAME.max_chaos
+            G.GAME.max_chaos = G.GAME.max_chaos + 100
+            G.GAME.chaos_slots = G.GAME.chaos_slots + 1
+          end
           if round_UI then
             G.HUD:recalculate()
             if not Spectrallib.should_skip_animations() then
@@ -135,4 +140,16 @@ local attributes = {
 
 for _, v in ipairs(attributes) do
     SMODS.Attribute { key = v }
+end
+
+function ChaosTheory.mod.calculate(self, context)
+  if context.starting_shop and G.GAME.chaos > 0 then
+    for i = 1, G.GAME.chaos_slots do
+      local probs = pseudorandom("CT_chaos_booster",0,1000)
+      if probs/10 > (((math.floor(G.GAME.chaos*10)/10) / G.GAME.chaos_slots)*-1) + 100 then
+        local booster = SMODS.poll_object{ pool = { "p_chat_chaos_mini", "p_chat_chaos_standard", "p_chat_chaos_jumbo", "p_chat_chaos_mega" }}
+        SMODS.add_booster_to_shop(booster)
+      end
+    end
+  end
 end

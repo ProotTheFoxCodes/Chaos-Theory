@@ -26,12 +26,26 @@ return {
                     "learn what it does",
                 },
             },
+            chat_chaos_desc = {
+                name = "Chaos",
+                text = {
+                    "The more {C:chat_chao}Chaos{} you have, the higher",
+                    "the chance a {C:chat_chao}Chaos Pack{} will {C:attention}spawn {}in the {C:attention}Shop{}",
+                    "by {C:attention}1%{} for each {C:chat_chao}Chaos{}. Every time the current",
+                    "maximum of {C:attention}#1#{} {C:chat_chao}Chaos {}is exceeded, set {C:chat_chao}Chaos {}to{C:attention} 0{},",
+                    "{C:attention}+100 {}max {C:chat_chao}Chaos {}and {C:attention}+1{} to max {C:chat_chao}Chaos Packs{}.",
+                    "{C:inactive}(Currently up to {}{C:attention}#2#{}{C:inactive} Chaos Packs.)",
+                    "{C:chat_chao}Chaos Packs {}don't replace other booster packs, and",
+                    "probabilities are evenly distributed across each possible",
+                    "{C:chat_chao}Chaos Pack {}that could spawn."
+                }
+            },
             p_chat_chaos_mini = { 
 				name = "Mini Chaos Pack",
 				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
@@ -40,7 +54,7 @@ return {
 				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
@@ -49,7 +63,7 @@ return {
 				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
@@ -58,7 +72,7 @@ return {
 				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:chat_chaos} Chaos{} cards to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
