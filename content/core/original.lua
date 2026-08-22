@@ -155,7 +155,7 @@ SMODS.Joker{
     unlocked = true,
     eternal_compat = true,
     pos = { x = 0, y = 0 },
-    soul_pos = { x = 2, y = 0, new = { x = 1, y = 0 } },
+    soul_pos = { x = 2, y = 0, extra = { x = 1, y = 0 } },
     cost = 100,
     attributes = { "passive", "chaos" },
     config = {
