@@ -78,7 +78,7 @@ function create_UIBox_HUD()
           }},
         }},
         {n=G.UIT.C, config={minw = spacing},nodes={}},
-        {n=G.UIT.C, config={id = 'hud_chaos',align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={
+        {n=G.UIT.C, config={id = 'hud_chaos',align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1, detailed_tooltip = { set = "Other", key = "chat_chaos_desc", vars = { G.GAME.max_chaos, G.GAME.chaos_slots } }}, nodes={
           {n=G.UIT.R, config={align = "cm", minh = 0.33, maxw = 1.35}, nodes={
             {n=G.UIT.T, config={text = localize('k_chaos'), scale = 0.85*scale, colour = SMODS.Gradients["chat_chaos"], shadow = true}},
           }},

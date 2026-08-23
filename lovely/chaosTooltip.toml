@@ -14,7 +14,6 @@ if self.config.detailed_tooltip and G.CONTROLLER.HID.pointer then
 position = "at"
 payload = '''
 if self.config.detailed_tooltip and G.CONTROLLER.HID.pointer then
-self.config.detailed_tooltip.
 self.config.h_popup = create_UIBox_detailed_tooltip(self.config.detailed_tooltip)
 if self.config.detailed_tooltip.key == "chat_chaos_desc" then
     self.config.h_popup_config = { align = "tm", offset = { x = 2.5, y = -0.1}, parent = self }
