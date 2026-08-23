@@ -20,6 +20,7 @@ function SMODS.current_mod.reset_game_globals(run_start)
   end
 end
 
+
 local uibox_ref = create_UIBox_HUD
 function create_UIBox_HUD()
   local orig = uibox_ref()

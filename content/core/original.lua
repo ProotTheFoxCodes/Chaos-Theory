@@ -85,20 +85,34 @@ SMODS.Atlas{
     py = 96
 }
 
+SMODS.Atlas{
+    key = "chaosBoosters",
+    path = "core/chaosBoosters.png",
+    px = 71,
+    py = 96
+}
+
 
 local boosterType = "chaos"
 local boosters = {
     {"mega",{2,1}},
     {"jumbo",{0,1}},
-    {"standard",{0,0}},
+    {"standard",{0,0},{ x = 1, y = 0, extra = { x = 2, y = 0 } } },
     {"mini",{0,2}}
 }
 
 for k,v in ipairs(boosters) do
+    local atlas_ = "ulelele"
+    if k == 3 then
+        atlas_ = "chaosBoosters"
+    else
+        atlas_ = "placeHBoosters"
+    end
     SMODS.Booster{
         key = boosterType.."_"..v[1],
-        atlas = "placeHBoosters",
+        atlas = atlas_,
         pos = { x = v[2][1] , y = v[2][2] },
+        soul_pos = not not v[3] and v[3],
         kind = boosterType,
         create_card = function(self, card)
             return {set = "chat_chaos", area = G.pack_cards, skip_materialize = true, soulable = true}
