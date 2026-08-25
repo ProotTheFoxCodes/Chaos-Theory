@@ -154,3 +154,38 @@ function ChaosTheory.mod.calculate(self, context)
     end
   end
 end
+
+
+-- Enforced tetration limit
+local calc_ref = SMODS.calculate_individual_effect
+SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
+    local logger = (pcall(function() require "debugplus.logger" end) and require "debugplus.logger") or {
+        log = print,
+        debug = print,
+        info = print,
+        warn = print,
+        error = print
+    }
+    --print(scored_card)
+    if scored_card and scored_card.config.center.mod and scored_card.config.center.mod.id == "chaostheory" then
+      local deepestExtra = effect
+      while true do
+        local goDeeper = false
+        if deepestExtra.eee_mult or deepestExtra.eee_chips then
+            logger.warn("Pentation (^^^) is not allowed in this event, defaulting to tetration (^^).")
+            if not deepestExtra.extra then deepestExtra.extra = {} else goDeeper = true end
+            deepestExtra.extra.ee_mult = deepestExtra.eee_mult
+            deepestExtra.extra.ee_chips = deepestExtra.eee_chips
+            deepestExtra.eee_mult, deepestExtra.eee_chips = nil
+        end
+        if deepestExtra.hyper_mult or deepestExtra.hyper_chips then
+            logger.warn("Hyperoperation is not allowed in this event, as it is higher than tetration. Defaulting to tetration (^^).")
+            if not deepestExtra.extra or not deepestExtra.extra.extra then deepestExtra.extra.extra = {} else goDeeper = true end
+            deepestExtra.extra.ee_mult, deepestExtra.extra.ee_chips = (deepestExtra.hyper_mult and deepestExtra.hyper_mult[2]), (deepestExtra.hyper_chips and deepestExtra.hyper_chips[2])
+            deepestExtra.hyper_chips, deepestExtra.hyper_mult = nil
+        end
+        if goDeeper then  deepestExtra = deepestExtra.extra  else break end
+      end
+    end
+    calc_ref(effect, scored_card, key, amount, from_edition)
+end
