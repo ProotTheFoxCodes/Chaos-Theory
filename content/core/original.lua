@@ -1,3 +1,51 @@
+PotatoPatchUtils.Team{
+    name = "Base Mod Devs",
+    loc = "PotatoPatchTeam_basemod",
+    colour = G.ARGS.LOC_COLOURS.chat_chao
+}
+
+SMODS.Atlas{
+    key = "proto_base",
+    px = 142,
+    py = 190,
+    path = "core/baseDevs/proto.png"
+}
+
+SMODS.Gradient{
+    key = "proot",
+    colours =  {
+        HEX("F59BAD"),HEX("F8EADC"),HEX("FFD995"),HEX("D66B1C"),HEX("F8EADC")
+    },
+    cycle = 5
+}
+
+G.ARGS.LOC_COLOURS.chat_j8 = HEX('E1540F')
+PotatoPatchUtils.Developer{
+    name = "proto_basedev",
+    team = "Base Mod Devs",
+    colour = G.ARGS.LOC_COLOURS.tarot,
+    loc = true,
+    atlas = "chat_proto_base",
+    pos = {x = 0, y = 1},
+    soul_pos = {x = 1, y = 1},
+    click = function(self)
+        love.system.openURL("https://ko-fi.com/foxgirlproto")
+    end,
+    calculate = function(self,context)
+        if context.starting_shop and G.GAME.chaos > 0 then
+            for i = 1, G.GAME.chaos_slots do
+                local probs = pseudorandom("CT_chaos_booster",0,1000)
+                if probs/10 > (((math.floor(G.GAME.chaos*10)/10) / G.GAME.chaos_slots)*-1) + 100 then
+                    local booster = SMODS.poll_object{ pool = { "p_chat_chaos_mini", "p_chat_chaos_standard", "p_chat_chaos_jumbo", "p_chat_chaos_mega" }}
+                    SMODS.add_booster_to_shop(booster)
+                end
+                print(context.individual and context.card_effects)
+            end
+        end
+    end
+}
+
+
 SMODS.ConsumableType{
     key = "chat_chaos",
     default = "c_chat_catalyst",
@@ -112,12 +160,16 @@ for k,v in ipairs(boosters) do
     local atlas_ = "chaosBoosters"
     SMODS.Booster{
         key = boosterType.."_"..v[1],
+        group_key = "chat_chaos_pack",
         atlas = atlas_,
+        ppu_coder = {"proto_basedev"},
+        ppu_artist = {"proto_basedev"},
         pos = { x = v[2][1] , y = v[2][2] },
         soul_pos = not not v[3] and v[3],
         kind = boosterType,
         disable_shine = true,
         cost = 10 - (2*k),
+        ct_basemod = true,
         create_card = function(self, card)
             return {set = "chat_chaos", area = G.pack_cards, skip_materialize = true, soulable = true}
         end,
@@ -138,6 +190,9 @@ SMODS.Consumable{
     atlas = "consumabPlaceH",
     pos = { x = 0, y = 2 },
     cost = 5,
+    ppu_artist = nil,
+    ppu_coder = {"proto_basedev"},
+    ct_basemod = true,
     config = {
         extra = {
             chaos = 5
@@ -160,6 +215,9 @@ SMODS.Consumable{
     atlas = "consumabPlaceH",
     pos = { x = 0, y = 2 },
     cost = 6,
+    ppu_artist = nil,
+    ppu_coder = {"proto_basedev"},
+    ct_basemod = true,
     config = {
         extra = {
             chaos = 10,
@@ -219,6 +277,8 @@ SMODS.Joker{
         }
     },
     no_collection = true,
+    ct_basemod = true,
+    ppu_coder = {"proto_basedev"},
     in_pool = function (self, args)
         return false
     end,
@@ -253,6 +313,7 @@ SMODS.Consumable {
     soul_rate = 0.00001,
     can_repeat_soul = true,
     soul_set = 'chaos',
+    ct_basemod = true,
 loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
@@ -321,6 +382,7 @@ SMODS.Joker{
     pos = { x = 0, y = 0 },
     soul_pos = { x = 2, y = 0, extra = { x = 1, y = 0 } },
     cost = 100,
+    ct_basemod = true,
     attributes = { "passive", "chaos" },
     config = {
         immutable = {

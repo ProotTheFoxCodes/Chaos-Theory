@@ -1,5 +1,31 @@
 return {
     descriptions = {
+        PotatoPatch = {
+            PotatoPatchTeam_basemod = { name = "Base Event Mod Developers"},
+            PotatoPatchDev_proto_basedev = {
+                name = "The Proto System",
+                text = {
+                    {
+                        "{C:inactive,s:0.85}aka ProdByProto",
+                        "{C:blue,s:0.85}Bluesky{} {s:0.85}@prodbyproto.bsky.social",
+                        "{C:chat_proot,s:1.35}2{}{C:chat_proot,s:1.25} of us as far as we know :3c",
+                        "{C:chat_sylveon,s:1.15}A sylveon      {C:chat_proot,s:1.15}and       {C:chat_fox,s:1.15}A foxgirl",
+                        "{C:inactive,s:0.85}it/she{}{s:1.15}        {C:inactive,s:0.85}plural{}{s:1.15}       {}{C:inactive,s:0.85} it/they",
+                    },
+                    {
+                        "{C:attention}Click{} on {C:uncommon}Clippy!Ralsei{} to view my ko-fi link,",
+                        "where you can donate to support my music production,",
+                        "balatro modding, commission music, or get a membership.",
+                        "{s:0.85}Technically, subscribing doesn't do anything yet, but if",
+                        "{s:0.85}interest in that picks up, we&'ll ask subscribers about what they want :3"
+                    },
+                    {
+                        "This {C:dark_edition}credit art{} was drawn by {C:chat_j8}J8-Bit",
+                        "{C:blue,s:0.85}Bluesky{} {s:0.85}@j8-bit.bsky.social"
+                    }
+                }
+            }
+        },
         Back={},
         Blind={},
         Edition={},
@@ -42,7 +68,6 @@ return {
             },
             p_chat_chaos_mini = { 
 				name = "Mini Chaos Pack",
-				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
 					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
@@ -51,7 +76,6 @@ return {
 			},
             p_chat_chaos_standard = { 
 				name = "Chaos Pack",
-				group_name = "Chaos Card",
 				text={
 					"Choose {C:attention}#1#{} of up to",
 					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
@@ -60,22 +84,28 @@ return {
 			},
             p_chat_chaos_jumbo = { 
 				name = "Jumbo Chaos Pack",
-				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2# {C:chat_chao} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_mega = { 
+				name = "Mega Chaos Pack",
 				text={
 					"Choose {C:attention}#1#{} of up to",
 					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
-            p_chat_chaos_mega = { 
-				name = "Mega Chaos Pack",
-				group_name = "Chaos Card",
-				text={
-					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{X:chat_chao,C:white} Chaos{} cards to",
-					"be used immediately",
-				}
-			},
+            ct_basemod_infoQ = {
+                name = "{element:1}",
+                text = {
+                    "This was added",
+                    "to {C:chat_chao}Chaos Theory",
+                    "before the main event!"
+                }
+            }
             
         },
         Planet={},
@@ -138,6 +168,7 @@ return {
             k_chat_supreme = "Supreme",
             k_chat_shiny = "Shiny",
             k_chaos = "Chaos",
+            ["chat_chaos_pack"] = "Chaos Pack",
             k_chat_imp = "Imps",
             k_chat_imp_card = "Imp",
             run_select_chat_imp_choice = "Select Imps",
@@ -145,6 +176,7 @@ return {
             ph_no_imps = "No Imps in this run",
 			ph_imps = "Imps in this run",
             b_imps = "Imps",
+            ct_basemod = "Base Mod Addition"
         },
         high_scores={},
         labels={

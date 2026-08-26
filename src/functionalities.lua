@@ -1,5 +1,8 @@
 --Colour UI
 
+G.ARGS.LOC_COLOURS.chat_fox = HEX("D66B1C")
+G.ARGS.LOC_COLOURS.chat_sylveon = HEX("F59BAD")
+
 SMODS.current_mod.ui_config = {
   colour = darken(G.C.BLACK, .2),
   author_colour = ChaosTheory.C.CPINK,
@@ -143,18 +146,6 @@ for _, v in ipairs(attributes) do
     SMODS.Attribute { key = v }
 end
 
-function ChaosTheory.mod.calculate(self, context)
-  if context.starting_shop and G.GAME.chaos > 0 then
-    for i = 1, G.GAME.chaos_slots do
-      local probs = pseudorandom("CT_chaos_booster",0,1000)
-      if probs/10 > (((math.floor(G.GAME.chaos*10)/10) / G.GAME.chaos_slots)*-1) + 100 then
-        local booster = SMODS.poll_object{ pool = { "p_chat_chaos_mini", "p_chat_chaos_standard", "p_chat_chaos_jumbo", "p_chat_chaos_mega" }}
-        SMODS.add_booster_to_shop(booster)
-      end
-    end
-  end
-end
-
 
 -- Enforced tetration limit
 local calc_ref = SMODS.calculate_individual_effect
@@ -167,7 +158,7 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
         error = print
     }
     --print(scored_card)
-    if scored_card and scored_card.config.center.mod and scored_card.config.center.mod.id == "chaostheory" then
+    if scored_card and scored_card.config.center and scored_card.config.center.mod and scored_card.config.center.mod.id == "chaostheory" then
       local deepestExtra = effect
       while true do
         local goDeeper = false
@@ -187,5 +178,17 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
         if goDeeper then  deepestExtra = deepestExtra.extra  else break end
       end
     end
-    calc_ref(effect, scored_card, key, amount, from_edition)
+    return calc_ref(effect, scored_card, key, amount, from_edition)
+end
+
+
+-- "Base Mod" badge
+local CT_mod_badges = SMODS.create_mod_badges
+function SMODS.create_mod_badges(obj,badges)
+  CT_mod_badges(obj,badges)
+  if obj and (obj.ct_basemod and obj.mod.id == "chaostheory") then
+    badges[#badges+1] = {n=G.UIT.R, config={align = 'tm'}, nodes={
+                {n=G.UIT.R, config={align='cm', padding = 0.03}, nodes={{n=G.UIT.T, config={text = localize("ct_basemod"), shadow = true, colour = SMODS.Gradients["chat_chaos"] or G.C.UI.BACKGROUND_WHITE, scale = 0.27}}}}
+            }}
+  end
 end
