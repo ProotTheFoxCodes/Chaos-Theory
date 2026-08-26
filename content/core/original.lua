@@ -78,6 +78,170 @@ SMODS.Atlas{
     py = 95
 }
 
+SMODS.Atlas{
+    key = "placeHBoosters",
+    path = "core/placeholdBooster.png",
+    px = 71,
+    py = 96
+}
+
+SMODS.Atlas{
+    key = "chaosBoosters",
+    path = "core/chaosBoosters.png",
+    px = 71,
+    py = 96
+}
+
+SMODS.Atlas{
+    key = "consumabPlaceH",
+    path = "core/consumabPlaceH.png",
+    px = 71,
+    py = 96
+}
+
+
+local boosterType = "chaos"
+local boosters = {
+    {"mega",{2,1},{ x = 4, y = 1, extra = { x = 3, y = 1 } } },
+    {"jumbo",{4,0},{ x = 1, y = 1, extra = { x = 0, y = 1 } } },
+    {"standard",{0,0},{ x = 1, y = 0, extra = { x = 2, y = 0 } } },
+    {"mini",{0,2},{ x = 1, y = 2 } }
+}
+
+for k,v in ipairs(boosters) do
+    local atlas_ = "chaosBoosters"
+    SMODS.Booster{
+        key = boosterType.."_"..v[1],
+        atlas = atlas_,
+        pos = { x = v[2][1] , y = v[2][2] },
+        soul_pos = not not v[3] and v[3],
+        kind = boosterType,
+        disable_shine = true,
+        cost = 10 - (2*k),
+        create_card = function(self, card)
+            return {set = "chat_chaos", area = G.pack_cards, skip_materialize = true, soulable = true}
+        end,
+        config = {
+            extra = 6-k,
+            choose = math.min(5-k, 3)
+        },
+        in_pool = function (self, args)
+            return false
+        end
+    }
+end
+
+
+SMODS.Consumable{
+    key = "hermes",
+    set = "Spectral",
+    atlas = "consumabPlaceH",
+    pos = { x = 0, y = 2 },
+    cost = 5,
+    config = {
+        extra = {
+            chaos = 5
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return{ vars = {card.ability.extra.chaos} }
+    end,
+    use = function (self, card, area, copier)
+        ease_chaos(card.ability.extra.chaos)
+    end,
+    can_use = function (self, card)
+        return true
+    end
+}
+
+SMODS.Consumable{
+    key = "loki",
+    set = "Spectral",
+    atlas = "consumabPlaceH",
+    pos = { x = 0, y = 2 },
+    cost = 6,
+    config = {
+        extra = {
+            chaos = 10,
+            destroy = 6
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        local cae = card.ability.extra
+        return{ vars = { cae.destroy, cae.chaos }}
+    end,
+    can_use = function (self, card)
+        return #G.hand.cards >= card.ability.extra.destroy
+    end,
+    use = function (self, card, area, copier)
+        local loki_cards = {}
+        for i = 1, #G.hand.cards do
+            if not (i > card.ability.extra.destroy) then
+                loki_cards[#loki_cards+1] = pseudorandom_element(G.hand.cards,"loki_destroy",{
+                    in_pool = function (v, args)
+                        return not v.ability.loki_sel
+                    end
+                    }
+                )
+                loki_cards[#loki_cards].ability.loki_sel = true
+            end
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        SMODS.destroy_cards(loki_cards)
+
+        delay(0.5)
+        ease_chaos(card.ability.extra.chaos)
+        delay(0.3)
+    end
+}
+
+
+--[[ for testing purposes
+eval SMODS.add_card{key = "j_chat_bleh"}
+]]
+SMODS.Joker{
+    key = "bleh",
+    loc_txt = {
+        default = {
+            name = "tester",
+            text = {
+                "+2 mult, x2 mult, ^2 mult, ^^2 mult, ^^^2 mult, 6,2 mult",
+                "^^^3 mult in return.extra, ^^^4 mult in return.extra.extra"
+            }
+        }
+    },
+    no_collection = true,
+    in_pool = function (self, args)
+        return false
+    end,
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return{
+                mult = 2,
+                x_mult = 2,
+                e_mult = 2,
+                ee_mult = 2,
+                eee_mult = 2,
+                hyper_mult = {6,2},
+                extra = {
+                    eee_mult = 3,
+                    extra = {
+                        eee_mult = 4
+                    }
+                }
+            }
+        end
+    end
+}
+
 
 SMODS.Consumable {
     key = 'catalyst',

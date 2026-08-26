@@ -26,9 +26,81 @@ return {
                     "learn what it does",
                 },
             },
+            chat_chaos_desc = {
+                name = "Chaos",
+                text = {
+                    "The more {X:chat_chao,C:white}Chaos{} you have, the higher",
+                    "the chance a {C:chat_chao}Chaos Pack{} will {C:attention}spawn {}in the {C:attention}Shop{}",
+                    "by {C:attention}1%{} for each {X:chat_chao,C:white}Chaos{}. Every time the current",
+                    "maximum of {C:attention}#1#{} {X:chat_chao,C:white}Chaos {} is exceeded, set {X:chat_chao,C:white}Chaos {} to{C:attention} 0{},",
+                    "{C:attention}+100 {}max {X:chat_chao,C:white}Chaos {} and {C:attention}+1{} to max {C:chat_chao}Chaos Packs{}.",
+                    "{C:inactive}(Currently up to {}{C:attention}#2#{}{C:inactive} Chaos Packs.)",
+                    "{C:chat_chao}Chaos Packs {}don't replace other booster packs, and",
+                    "probabilities are evenly distributed across each possible",
+                    "{C:chat_chao}Chaos Pack {}that could spawn."
+                }
+            },
+            p_chat_chaos_mini = { 
+				name = "Mini Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_standard = { 
+				name = "Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_jumbo = { 
+				name = "Jumbo Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            p_chat_chaos_mega = { 
+				name = "Mega Chaos Pack",
+				group_name = "Chaos Card",
+				text={
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{X:chat_chao,C:white} Chaos{} cards to",
+					"be used immediately",
+				}
+			},
+            
         },
         Planet={},
-        Spectral={},
+        Spectral={
+            c_chat_hermes = {
+                name = {
+                    "Hermes",
+                    "{C:inactive,s:0.85}Ancient Greek God of Wit"
+                },
+                text = {
+                    "Gain {C:attention}#1# {}{X:chat_chao,C:white}Chaos{}."
+                }
+            },
+            c_chat_loki = {
+                name = {
+                    "Loki",
+                    "{C:inactive,s:0.85}Norse Trickster God"
+                },
+                text = {
+                    "Destroys {C:attention}#1# {}random",
+                    "cards in hand,",
+                    "gain {C:attention}#2# {}{X:chat_chao,C:white}Chaos{}."
+                }
+            }
+        },
         chat_chaos={
             c_chat_catalyst = {
                 name = {"Catalyst"},

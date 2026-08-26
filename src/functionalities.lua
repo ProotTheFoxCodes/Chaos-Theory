@@ -15,8 +15,11 @@ SMODS.current_mod.ui_config = {
 function SMODS.current_mod.reset_game_globals(run_start)
   if run_start then
     G.GAME.chaos = 0
+    G.GAME.max_chaos = 200
+    G.GAME.chaos_slots = 2
   end
 end
+
 
 local uibox_ref = create_UIBox_HUD
 function create_UIBox_HUD()
@@ -45,7 +48,7 @@ function create_UIBox_HUD()
           {n=G.UIT.T, config={text = localize('b_options'), scale = scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
         }},
         }},
-        {n=G.UIT.R, config={align = "cm", minh = 1, minw = 2,padding = 0.05, r = 0.1, hover = true, colour=G.C.DYN_UI.BOSS_MAIN,emboss=0.05}, nodes={
+        {n=G.UIT.R, config={align = "cm", minh = 1, minw = 2,padding = 0.05, r = 0.1, hover = true, colour=G.C.DYN_UI.BOSS_MAIN,emboss=0.05,detailed_tooltip = { set = "Other", key = "chat_chaos_desc", vars = { G.GAME.max_chaos, G.GAME.chaos_slots } },}, nodes={
         {n=G.UIT.R, config={align = "cm", maxw = 1.35}, nodes={
           {n=G.UIT.T, config={text = localize('k_chaos'), minh = 0.33, scale = 0.85*scale, colour = SMODS.Gradients["chat_chaos"], shadow = true}},
         }},
@@ -76,7 +79,7 @@ function create_UIBox_HUD()
           }},
         }},
         {n=G.UIT.C, config={minw = spacing},nodes={}},
-        {n=G.UIT.C, config={id = 'hud_chaos',align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1}, nodes={
+        {n=G.UIT.C, config={id = 'hud_chaos',align = "cm", padding = 0.05, minw = 1.45, minh = 1, colour = temp_col, emboss = 0.05, r = 0.1, detailed_tooltip = { set = "Other", key = "chat_chaos_desc", vars = { G.GAME.max_chaos, G.GAME.chaos_slots } }}, nodes={
           {n=G.UIT.R, config={align = "cm", minh = 0.33, maxw = 1.35}, nodes={
             {n=G.UIT.T, config={text = localize('k_chaos'), scale = 0.85*scale, colour = SMODS.Gradients["chat_chaos"], shadow = true}},
           }},
@@ -104,8 +107,11 @@ function ease_chaos(mod)
               col = G.C.BLACK
           end
           G.GAME.chaos = (G.GAME.chaos or 0) + mod
-          G.GAME.chat_chaos_rate = (G.GAME.chat_chaos_rate or 0) + mod/10
-          G.GAME.c_chat_catalyst_rate = (G.GAME.c_chat_catalyst_rate or 0) + mod/100
+          if G.GAME.chaos > G.GAME.max_chaos then
+            G.GAME.chaos = G.GAME.chaos - G.GAME.max_chaos
+            G.GAME.max_chaos = G.GAME.max_chaos + 100
+            G.GAME.chaos_slots = G.GAME.chaos_slots + 1
+          end
           if round_UI then
             G.HUD:recalculate()
             if not Spectrallib.should_skip_animations() then
@@ -135,4 +141,51 @@ local attributes = {
 
 for _, v in ipairs(attributes) do
     SMODS.Attribute { key = v }
+end
+
+function ChaosTheory.mod.calculate(self, context)
+  if context.starting_shop and G.GAME.chaos > 0 then
+    for i = 1, G.GAME.chaos_slots do
+      local probs = pseudorandom("CT_chaos_booster",0,1000)
+      if probs/10 > (((math.floor(G.GAME.chaos*10)/10) / G.GAME.chaos_slots)*-1) + 100 then
+        local booster = SMODS.poll_object{ pool = { "p_chat_chaos_mini", "p_chat_chaos_standard", "p_chat_chaos_jumbo", "p_chat_chaos_mega" }}
+        SMODS.add_booster_to_shop(booster)
+      end
+    end
+  end
+end
+
+
+-- Enforced tetration limit
+local calc_ref = SMODS.calculate_individual_effect
+SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
+    local logger = (pcall(function() require "debugplus.logger" end) and require "debugplus.logger") or {
+        log = print,
+        debug = print,
+        info = print,
+        warn = print,
+        error = print
+    }
+    --print(scored_card)
+    if scored_card and scored_card.config.center.mod and scored_card.config.center.mod.id == "chaostheory" then
+      local deepestExtra = effect
+      while true do
+        local goDeeper = false
+        if deepestExtra.eee_mult or deepestExtra.eee_chips then
+            logger.warn("Pentation (^^^) is not allowed in this event, defaulting to tetration (^^).")
+            if not deepestExtra.extra then deepestExtra.extra = {} else goDeeper = true end
+            deepestExtra.extra.ee_mult = deepestExtra.eee_mult
+            deepestExtra.extra.ee_chips = deepestExtra.eee_chips
+            deepestExtra.eee_mult, deepestExtra.eee_chips = nil
+        end
+        if deepestExtra.hyper_mult or deepestExtra.hyper_chips then
+            logger.warn("Hyperoperation is not allowed in this event, as it is higher than tetration. Defaulting to tetration (^^).")
+            if not deepestExtra.extra or not deepestExtra.extra.extra then deepestExtra.extra.extra = {} else goDeeper = true end
+            deepestExtra.extra.ee_mult, deepestExtra.extra.ee_chips = (deepestExtra.hyper_mult and deepestExtra.hyper_mult[2]), (deepestExtra.hyper_chips and deepestExtra.hyper_chips[2])
+            deepestExtra.hyper_chips, deepestExtra.hyper_mult = nil
+        end
+        if goDeeper then  deepestExtra = deepestExtra.extra  else break end
+      end
+    end
+    calc_ref(effect, scored_card, key, amount, from_edition)
 end

@@ -1,0 +1,27 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+local cfg = (card and card.ability) or _c['config']
+if _c.set == 'Other' then
+    localize{type = 'other', key = _c.key, nodes = desc_nodes, vars = specific_vars or _c.vars}
+'''
+position = "at"
+payload = '''
+local cfg = (card and card.ability) or _c['config']
+if _c.set == 'Other' then
+    if _c.key == "chat_chaos_desc" then
+        local update_vars = {}
+        update_vars[1] = G.GAME.max_chaos
+        update_vars[2] = G.GAME.chaos_slots
+        localize{type = 'other', key = _c.key, nodes = desc_nodes, vars = update_vars}
+    else
+        localize{type = 'other', key = _c.key, nodes = desc_nodes, vars = specific_vars or _c.vars}
+    end
+'''
+match_indent = true
