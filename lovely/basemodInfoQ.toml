@@ -1,0 +1,24 @@
+[manifest]
+version = "0.1.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+pattern = '''for _, v in ipairs(info_queue) do'''
+position = 'before'
+payload = '''
+if card and card.config.center and card.config.center.ct_basemod then info_queue[#info_queue+1] = { key = "ct_basemod_infoQ", set = "Other",
+    vars = {
+        elements = {
+            { n=G.UIT.R, config = { align="cm" }, nodes = {
+            { n=G.UIT.O, config= { object =
+                SMODS.create_sprite(0, 0, 0.75, 0.75, "chat_modicon", {x = 0, y = 0})
+            } }
+        } },
+        }
+    }
+} end
+'''
