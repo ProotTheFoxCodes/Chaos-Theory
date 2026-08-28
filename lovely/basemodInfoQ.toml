@@ -1,24 +1,40 @@
 [manifest]
-version = "0.1.0"
+version = '1.0.0'
 dump_lua = true
-priority = 1
+priority = 0
 
+# Add info_queue bubbles if needed
 [[patches]]
 [patches.pattern]
-target = 'functions/common_events.lua'
+target = 'functions/UI_definitions.lua'
 match_indent = true
-pattern = '''for _, v in ipairs(info_queue) do'''
 position = 'before'
+pattern = '''
+local cols
+'''
 payload = '''
-if card and card.config.center and card.config.center.ct_basemod then info_queue[#info_queue+1] = { key = "ct_basemod_infoQ", set = "Other",
-    vars = {
-        elements = {
-            { n=G.UIT.R, config = { align="cm" }, nodes = {
-            { n=G.UIT.O, config= { object =
-                SMODS.create_sprite(0, 0, 0.75, 0.75, "chat_modicon", {x = 0, y = 0})
-            } }
-        } },
-        }
-    }
-} end
+if obj and obj.ct_basemod then
+    local ct_bm = {}
+    for i = 1, 3 do
+        ct_bm[#ct_bm+1] = localize{key = "ct_basemod_infoQ"..i, type = "text"}
+    end
+    info_boxes[#info_boxes+1] = {n=G.UIT.R, config={align = "cm"}, nodes={
+            {n=G.UIT.R, config={align = "cm", colour = darken(G.C.JOKER_GREY, 0.4), r = 0.1, padding = 0.05, emboss = 0.05}, nodes={
+                {n=G.UIT.R, config={align = "cm", colour = SMODS.Gradients["chat_chaos_infoQ"], r = 0.1}, nodes={
+                    {n=G.UIT.R, config={align = "tm", minh = 0.36, padding = 0.03}, nodes={
+                        { n=G.UIT.O, config= { object =
+                            SMODS.create_sprite(0, 0, 0.75, 0.75, "chat_modicon", {x = 0, y = 0}),
+                            scale = 0.32, colour = G.C.UI.TEXT_LIGHT
+                        }},
+                        
+                    },
+                    
+                    }
+                }},
+                {n=G.UIT.R, config={align = "cm", minw = 1.5, minh = 0.4, r = 0.1, padding = 0.05, colour = darken(G.C.BLACK, .2)}, nodes={
+                    transparent_multiline_text(ct_bm)--G.localization.descriptions.Other.ct_basemod_infoQ.text_parsed)
+                }}
+            }}
+        }}
+end
 '''
