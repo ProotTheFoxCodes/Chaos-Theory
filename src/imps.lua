@@ -109,6 +109,7 @@ ChaosTheory.Imp({
 	pixel_size = {w = 34, h = 34},]]
 	atlas = "impl",
 	key = "impless",
+    ct_basemod = true,
 	config = {},
 	blueprint_compat = true,
   apply = function(self)
@@ -129,6 +130,7 @@ ChaosTheory.Imp({
 	pixel_size = {w = 34, h = 34},]]
 	atlas = "sti",
 	key = "stingy",
+    ct_basemod = true,
 	config = {},
 	blueprint_compat = true,
   apply = function(self)
