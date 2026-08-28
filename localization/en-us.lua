@@ -97,15 +97,7 @@ return {
 					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
-			},
-            ct_basemod_infoQ = {
-                name = "    {element:1}ct_bm{}",
-                text = {
-                    "This was added",
-                    "to {C:chat_chao}Chaos Theory",
-                    "before the main event!"
-                }
-            }
+			}
             
         },
         Planet={},
