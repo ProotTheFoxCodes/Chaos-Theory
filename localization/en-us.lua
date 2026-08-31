@@ -86,7 +86,7 @@ return {
 				name = "Jumbo Chaos Pack",
 				text={
 					"Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2# {C:chat_chao} Chaos{} cards to",
+					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
 			},
@@ -97,15 +97,7 @@ return {
 					"{C:attention}#2#{C:chat_chao} Chaos{} cards to",
 					"be used immediately",
 				}
-			},
-            ct_basemod_infoQ = {
-                name = "{element:1}",
-                text = {
-                    "This was added",
-                    "to {C:chat_chao}Chaos Theory",
-                    "before the main event!"
-                }
-            }
+			}
             
         },
         Planet={},
@@ -163,6 +155,7 @@ return {
         challenge_names={},
         collabs={},
         dictionary={
+            k_chat_solo_creds = "Solo Credits",
             k_chat_chaos = "Chaos",
             b_chat_chaos_cards = "Chaos Cards",
             k_chat_supreme = "Supreme",
@@ -195,6 +188,10 @@ return {
         suits_singular={},
         tutorial={},
         v_dictionary={},
-        v_text={},
+        v_text={
+            ct_basemod_infoQ1 = {"{C:white}This was added"},
+            ct_basemod_infoQ2 = {"{C:white}to {C:chat_chao}Chaos Theory"},
+            ct_basemod_infoQ3 = {"{C:white}before the main event!"}
+        },
     },
 }

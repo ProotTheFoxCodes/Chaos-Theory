@@ -17,6 +17,18 @@ SMODS.Gradient{
     interpolation = 'trig',
 }
 
+local dark = 0.2
+SMODS.Gradient{
+    key = "chaos_infoQ",
+    colours = {
+        darken(ChaosTheory.C.CBLUE, dark),
+        darken(ChaosTheory.C.CRED, dark),
+        darken(ChaosTheory.C.CYELLOW, dark),
+        darken(ChaosTheory.C.CGREEN, dark),
+    },
+    cycle = 8,
+    interpolation = 'trig',
+}
 G.ARGS.LOC_COLOURS.chat_cblue = ChaosTheory.C.CBLUE
 G.ARGS.LOC_COLOURS.chat_cred = ChaosTheory.C.CRED
 G.ARGS.LOC_COLOURS.chat_cyellow = ChaosTheory.C.CYELLOW
