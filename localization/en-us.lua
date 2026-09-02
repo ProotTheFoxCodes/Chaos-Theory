@@ -24,7 +24,18 @@ return {
                         "{C:blue,s:0.85}Bluesky{} {s:0.85}@j8-bit.bsky.social"
                     }
                 }
-            }
+            },
+            PotatoPatchDev_FirstTry = {
+                name = "FirstTry",
+                text = {
+                    {"Hi I made this mod",
+                    "I also made {s:1.5,C:chat_chao}Busted Buffoons{}.",
+                    "I'm mostly an artist",
+                    "but I learned how to program mods last year.",
+                    "Thank you to all who participated!"},
+                    {"If you wanna check out {s:1.5,C:chat_chao}Busted Buffoons{}, click on my OC."}
+                }
+            },
         },
         Back={},
         Blind={},
