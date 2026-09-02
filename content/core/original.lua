@@ -45,6 +45,44 @@ PotatoPatchUtils.Developer{
     end
 }
 
+SMODS.Atlas{
+    key = "ftdev",
+    px = 71,
+    py = 95,
+    path = "core/baseDevs/FirstTryDev.png"
+}
+
+PotatoPatchUtils.Developer{
+    name = "FirstTry",
+    team = "Base Mod Devs",
+    colour = ChaosTheory.C.CHAOS_C,
+    loc = true,
+    atlas = "chat_ftdev",
+    pos = {x = 0, y = 0 },
+    soul_pos = {x = 1, y = 0},
+    loc_vars = function(self, info_queue)
+        return { vars = { " " } }        
+    end,
+    click = function(self)
+        love.system.openURL("https://github.com/TheActualFirstTry/BUSTED-BUFFOONS")
+    end,
+    calculate = function(self,context)
+        if context.using_consumeable and context.consumeable.config.center.key == "c_chat_catalyst" then
+            if G.GAME.chaos < 100 then
+            G.E_MANAGER:add_event(Event({
+			trigger = "before",
+			delay = 0.75,
+			func = function()
+                G.GAME.slib_banished_keys[context.consumeable] = true
+                G.GAME.banned_keys["c_chat_catalyst"] = true
+				return true
+			end,
+		}))
+        end
+    end
+end
+}
+
 
 SMODS.ConsumableType{
     key = "chat_chaos",
@@ -183,14 +221,20 @@ for k,v in ipairs(boosters) do
     }
 end
 
+SMODS.Atlas{
+    key = "Hermesatlas",
+    px = 71,
+    py = 95,
+    path = "core/HermesSpectral.png"
+}
 
 SMODS.Consumable{
     key = "hermes",
     set = "Spectral",
-    atlas = "consumabPlaceH",
-    pos = { x = 0, y = 2 },
+    atlas = "Hermesatlas",
+    pos = { x = 0, y = 0 },
     cost = 5,
-    ppu_artist = nil,
+    ppu_artist = { "FirstTry" },
     ppu_coder = {"proto_basedev"},
     ct_basemod = true,
     config = {
@@ -318,29 +362,6 @@ loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
     use = function(self, card, area, copier)
-        if G.GAME.chaos < 100 then
-        G.E_MANAGER:add_event(Event({
-			trigger = "before",
-			delay = 0.75,
-			func = function()
-                G.GAME.banned_keys["c_chat_catalyst"] = true
-				return true
-			end,
-		}))
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.4,
-            func = function()
-				play_sound("timpani")
-				local card = create_card("Joker", G.jokers, nil, "chat_supreme", nil, nil, nil, "chat_catalyst")
-				card:add_to_deck()
-				G.jokers:emplace(card)
-				card:juice_up(0.3, 0.5)
-				return true
-            end
-        }))
-        delay(0.6)
-    else
         G.E_MANAGER:add_event(Event({
 			trigger = "before",
 			delay = 0.75,
@@ -362,7 +383,6 @@ loc_vars = function(self, info_queue, card)
             end
         }))
         delay(0.6)
-    end
 end,
 can_use = function(self, card)
         return G.jokers

@@ -4,7 +4,7 @@
     "version": "0.1",
     "description": "A crazy mod arranged by an even crazier guy and made by a couple of the craziest talents.",
     "prefix": "chat",
-    "author": ["FirstTry"],
+    "author": ["The Chaos Theory Team"],
     "main_file": "chaostheory.lua",
     "priority": 0,
 	"text_colour": "F3F3F3",

@@ -132,6 +132,8 @@ ChaosTheory.Imp({
 	key = "stingy",
     ct_basemod = true,
 	config = {},
+    ppu_artist = { "FirstTry" },
+    ppu_coder = { "FirstTry" },
 	blueprint_compat = true,
   apply = function(self)
 	    G.GAME.modifiers.no_blind_reward = G.GAME.modifiers.no_blind_reward or {}
